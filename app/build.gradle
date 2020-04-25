@@ -42,7 +42,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    //Nav controller
+    //Navigation
     def nav_version = "2.3.0-alpha05"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
@@ -51,7 +51,15 @@ dependencies {
     //Room database
     def room_version = "2.2.5"
     implementation "androidx.room:room-runtime:$room_version"
-    annotationProcessor "androidx.room:room-compiler:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation "androidx.lifecycle:lifecycle-extensions:2.0.0"
+
+    // Coroutines
+    def coroutine_version = '1.0.0'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version"
+
 
 
 }

@@ -5,6 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.sleep_item_layout.view.*
 import me.alberto.sleeptracker.R
@@ -12,31 +14,32 @@ import me.alberto.sleeptracker.convertDurationToFormatted
 import me.alberto.sleeptracker.convertNumericQualityToString
 import me.alberto.sleeptracker.database.SleepNight
 
-class SleepNightAdapter : RecyclerView.Adapter<SleepNightAdapter.TextItemViewHolder>() {
-    var data = listOf<SleepNight>()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
+class SleepNightAdapter : ListAdapter<SleepNight, SleepNightAdapter.TextItemViewHolder>(SleepNightDiffCallback()) {
+
+    class SleepNightDiffCallback: DiffUtil.ItemCallback<SleepNight>(){
+        override fun areItemsTheSame(oldItem: SleepNight, newItem: SleepNight): Boolean {
+            return oldItem.nightId == newItem.nightId
         }
+
+        override fun areContentsTheSame(oldItem: SleepNight, newItem: SleepNight): Boolean {
+            return oldItem == newItem
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TextItemViewHolder {
         return TextItemViewHolder.from(parent)
     }
 
-    override fun getItemCount(): Int {
-        return data.size
-    }
-
     override fun onBindViewHolder(holder: TextItemViewHolder, position: Int) {
-        val item = data[position]
+        val item = getItem(position)
         holder.bind(item)
     }
 
 
     class TextItemViewHolder private constructor(view: View) : RecyclerView.ViewHolder(view) {
-        val sleepLength = view.findViewById<TextView>(R.id.sleep_length)
-        val quality: TextView = view.findViewById(R.id.quality_string)
-        val qualityImage: ImageView = view.quality_image
+       private val sleepLength: TextView = view.findViewById<TextView>(R.id.sleep_length)
+       private val quality: TextView = view.findViewById(R.id.quality_string)
+       private val qualityImage: ImageView = view.quality_image
 
 
         fun bind(item: SleepNight) {

@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 
 import me.alberto.sleeptracker.R
 import me.alberto.sleeptracker.database.SleepDataBase
@@ -57,6 +58,20 @@ class SleepTrackerFragment : Fragment() {
             }
 
         })
+
+
+        sleepTrackerViewModel.showSnackbarEvent.observe(viewLifecycleOwner, Observer {
+            if (it){
+                Snackbar.make(requireActivity().findViewById(R.id.start_button), getString(R.string.cleared_message), Snackbar.LENGTH_SHORT).show()
+                sleepTrackerViewModel.doneShowingSnackbar()
+            }
+        })
+
+        val adapter = SleepNightAdapter()
+        sleepTrackerViewModel.nights.observe(viewLifecycleOwner, Observer {
+            it?.let { adapter.data = it }
+        })
+        binding.sleepList.adapter = adapter
 
         return binding.root
     }

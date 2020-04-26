@@ -59,7 +59,6 @@ class SleepTrackerFragment : Fragment() {
 
         })
 
-
         sleepTrackerViewModel.showSnackbarEvent.observe(viewLifecycleOwner, Observer {
             if (it){
                 Snackbar.make(requireActivity().findViewById(R.id.start_button), getString(R.string.cleared_message), Snackbar.LENGTH_SHORT).show()

@@ -17,6 +17,9 @@
             app:enterAnim="@anim/slide_in_right"
             app:popEnterAnim="@anim/slide_in_right"
             />
+        <action
+            android:id="@+id/action_sleepTrackerFragment_to_sleepDetailFragment"
+            app:destination="@id/sleepDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/sleepQualityFragment"
@@ -34,5 +37,18 @@
         <argument
             android:name="SleepNightKey"
             app:argType="long" />
+    </fragment>
+    <fragment
+        android:id="@+id/sleepDetailFragment"
+        android:name="me.alberto.sleeptracker.sleepdetail.SleepDetailFragment"
+        android:label="SleepDetailFragment"
+        tools:layout="@layout/fragment_sleep_detail"
+        >
+        <argument
+            android:name="sleepNightKey"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_sleepDetailFragment_to_sleepTrackerFragment"
+            app:destination="@id/sleepTrackerFragment" />
     </fragment>
 </navigation>
